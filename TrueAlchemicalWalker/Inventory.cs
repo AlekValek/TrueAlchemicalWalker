@@ -55,7 +55,7 @@ namespace TrueAlchemicalWalker
             numberRenderer = new NumberRenderer(content);
             spriteBatch.Draw(inventoryTexture, Position, Color.White);
             for (var i = 0; i < listOfNumberPosition().Count; i++ )
-                numberRenderer.DrawNumber(spriteBatch, dictionaryOfAllPlants[obstacles[i].Name] /*obstacles[i].CountOfObstacle*/, Position + listOfNumberPosition()[i]);
+                numberRenderer.DrawNumber(spriteBatch, dictionaryOfAllPlants[obstacles[i].Name], Position + listOfNumberPosition()[i]);
         }
 
     }
