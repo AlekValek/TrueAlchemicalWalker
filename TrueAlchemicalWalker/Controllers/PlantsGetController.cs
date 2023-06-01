@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace TrueAlchemicalWalker
 {
-    public class PlantsGetController
+    public class GetPlantsController
     {
         private Player player;
         private Background background;
@@ -18,7 +18,7 @@ namespace TrueAlchemicalWalker
         public MultipleItemsController multipleItemsController;
         public NonPlayPlants nonPlayPlants;
 
-        public PlantsGetController(Player player, Background background, List<Obstacle> obstacles, NonPlayPlants nonPlayPlants, GameSetting settings)
+        public GetPlantsController(Player player, Background background, List<Obstacle> obstacles, NonPlayPlants nonPlayPlants, GameSetting settings)
         {
             this.player = player;
             this.background = background;
@@ -51,9 +51,9 @@ namespace TrueAlchemicalWalker
                 && Math.Min(player.Position.X + player.Texture.Width, itemPosition.X + ItemTexture.Width)
                 >= Math.Max(player.Position.X, itemPosition.X)
 
-                   && (mouseState.Y >= itemPosition.Y && mouseState.Y <= (itemPosition.Y + ItemTexture.Height))
-                   && (mouseState.X >= itemPosition.X && mouseState.X <= (itemPosition.X + ItemTexture.Width))
-                   && (mouseState.RightButton == ButtonState.Pressed);
+                && mouseState.Y >= itemPosition.Y && mouseState.Y <= (itemPosition.Y + ItemTexture.Height)
+                && mouseState.X >= itemPosition.X && mouseState.X <= (itemPosition.X + ItemTexture.Width)
+                && (mouseState.RightButton == ButtonState.Pressed);
         }
     }
 }

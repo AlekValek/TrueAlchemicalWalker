@@ -16,12 +16,12 @@ namespace TrueAlchemicalWalker
         public int countOfObstacle { get; set; } = 10;
         public int countOfNonPlayPLants { get; set; } = 20;
         public float speed { get; set; } = 5f;
-        public int gameDifficulty { get; set; } = 5;
-        public int activeCrafting { get; set; } = 2;
+        public int gameDifficulty { get; set; } = 2;
+        public int activeCrafting { get; set; } = 0;
         public List<List<int>> ListOfCraftingCost = new List<List<int>>()
         {
             new List<int>() { 1, 2, 3 },
-            new List<int>() { 2, 1, 1 },
+            new List<int>() { 1, 1, 1 },
             new List<int>() { 3, 1, 2 }
         };
         public List<int> GetActiveCraft()
@@ -48,7 +48,7 @@ namespace TrueAlchemicalWalker
         public void GetDictionaryPlants(Player player, List<Obstacle> obstacles)
         {
             for (int i = 0; i < obstacles.Count; i++)
-                player.dictionaryOfAllPlants.Add(obstacles[i].Name, 11);
+                player.dictionaryOfAllPlants.Add(obstacles[i].Name, 20);
         }
         public void GetDictionaryNewPlants(Player player, List<Obstacle> obstacles)
         {

@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrueAlchemicalWalker.Items;
 
 namespace TrueAlchemicalWalker.Controllers
@@ -27,11 +24,12 @@ namespace TrueAlchemicalWalker.Controllers
         }
         public void ChangeCoord(float changeX, float changeY)
         {
-            for (int i = 0; i < obstacles.Count; i++) ChangeCoordForOne(changeX, changeY, obstacles[i].listOfObstaclePositions);
+            for (int i = 0; i < obstacles.Count; i++) 
+                ChangeCoordForOne(changeX, changeY, obstacles[i].listOfObstaclePositions);
             ChangeCoordForOne(changeX, changeY, nonPlayPlants.listOfNonPlayPlantsPositions);
-            ChangeCoordForOne(changeX, changeY, new List<Vector2> { background.Position });
-            ChangeCoordForOne(changeX, changeY, new List<Vector2> { inventory.Position });
-            ChangeCoordForOne(changeX, changeY, new List<Vector2> { workbench.Position });
+            background.Position = new Vector2(background.Position.X + changeX, background.Position.Y + changeY);
+            inventory.Position = new Vector2(inventory.Position.X + changeX, inventory.Position.Y + changeY);
+            workbench.Position = new Vector2(workbench.Position.X + changeX, workbench.Position.Y + changeY);
         }
 
         private static void ChangeCoordForOne(float changeX, float changeY, List<Vector2> listOfItems)

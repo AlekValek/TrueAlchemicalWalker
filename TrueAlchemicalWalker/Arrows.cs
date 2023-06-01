@@ -10,13 +10,8 @@ namespace TrueAlchemicalWalker
 {
     public class Arrows
     {
-        public Player player;
         public int Height { get; set; } = 30;
         public int Width { get; set; } = 30;
-        public Arrows(Player player)
-        {
-            this.player = player;
-        }
         public List<Vector2> ListOfArrowsPosition()
         {
             List<Vector2> positions = new()
@@ -27,16 +22,19 @@ namespace TrueAlchemicalWalker
             };
             return positions;
         }
-        public bool IsMouseInsideArrow(MouseState mouseState, int numberOfItem)
+        public bool IsMouseInsideArrow(MouseState mouseState, int numberOfItem, Player player, Vector2 workbanchPosition)
         {
-            return Math.Min(player.Position.Y + player.Texture.Height, ListOfArrowsPosition()[numberOfItem].Y + Height)
-                >= Math.Max(player.Position.Y, ListOfArrowsPosition()[numberOfItem].Y)
-                && Math.Min(player.Position.X + player.Texture.Width, ListOfArrowsPosition()[numberOfItem].X + Width)
-                >= Math.Max(player.Position.X, ListOfArrowsPosition()[numberOfItem].X)
+            return
+                          Math.Min(player.Position.Y + player.Texture.Height, ListOfArrowsPosition()[numberOfItem].Y + Height)
+                       >= Math.Max(player.Position.Y, ListOfArrowsPosition()[numberOfItem].Y)
+                       && Math.Min(player.Position.X + player.Texture.Width, ListOfArrowsPosition()[numberOfItem].X + Width)
+                       >= Math.Max(player.Position.X, ListOfArrowsPosition()[numberOfItem].X)
 
-                && mouseState.Y >= ListOfArrowsPosition()[numberOfItem].Y && (mouseState.Y <= ListOfArrowsPosition()[numberOfItem].Y + Height)
-                && mouseState.X >= ListOfArrowsPosition()[numberOfItem].X && (mouseState.X <= ListOfArrowsPosition()[numberOfItem].X + Width)
-               && (mouseState.RightButton == ButtonState.Pressed);
+                &&
+                mouseState.Y >= ListOfArrowsPosition()[numberOfItem].Y && mouseState.Y <= ListOfArrowsPosition()[numberOfItem].Y + workbanchPosition.Y + Height
+                && mouseState.X >= ListOfArrowsPosition()[numberOfItem].X && mouseState.X <= ListOfArrowsPosition()[numberOfItem].X + workbanchPosition.X + Width
+               && (mouseState.RightButton == ButtonState.Pressed)
+               ;
         }
     }
 }

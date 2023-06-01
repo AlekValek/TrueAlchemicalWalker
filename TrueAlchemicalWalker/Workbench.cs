@@ -43,11 +43,12 @@ namespace TrueAlchemicalWalker
             get { return workbenchTexture; }
             set { workbenchTexture = value; }
         }
-        public Workbench(Background background, SpriteBatch spriteBatch, List<Obstacle> obstacles)
+        public Workbench(Background background, SpriteBatch spriteBatch, List<Obstacle> obstacles, Arrows arrows)
         {
             this.background = background;
             this.spriteBatch = spriteBatch;
             this.obstacles = obstacles;
+            this.arrows = arrows;
             random = new Random();
         }
 
@@ -60,13 +61,12 @@ namespace TrueAlchemicalWalker
             Position = new Vector2(x, y);
         }
         
-        public void CraftNewItem (Player player, MouseState mouseState, GameSetting setting, List<Obstacle> obstacles)
+        public void CraftNewItem (Player player, MouseState mouseState, GameSetting setting, List<Obstacle> obstacles, Arrows arrows)
         {
-            arrows = new Arrows(player);
-            var currentNumber = GetNumberOfItem(mouseState, arrows);
+            var currentNumber = GetNumberOfItem(mouseState, arrows, player);
             if (currentNumber != -1)
             {
-                if (player.dictionaryOfAllPlants[obstacles[currentNumber].Name] >= setting.GetActiveCraft()[currentNumber] 
+                if (player.dictionaryOfAllPlants[obstacles[currentNumber].Name] >= setting.GetActiveCraft()[currentNumber]
                     && player.dictionaryOfAllNewPlants[obstacles[currentNumber].Name] > 0)
                 {
                     player.dictionaryOfAllPlants[obstacles[currentNumber].Name] -= setting.GetActiveCraft()[currentNumber];
@@ -75,26 +75,24 @@ namespace TrueAlchemicalWalker
             }
         }
 
-        public int GetNumberOfItem(MouseState mouseState, Arrows arrows)
+        public int GetNumberOfItem(MouseState mouseState, Arrows arrows, Player player)
         {
+            var currentItem = -1;
             for (var i = 0; i < arrows.ListOfArrowsPosition().Count; i++)
-                if (arrows.IsMouseInsideArrow(mouseState, i)) return i;
-            return -1;
+                if (arrows.IsMouseInsideArrow(mouseState, i, player, Position))
+                    return currentItem = i;
+            return currentItem;
         }
 
-        public void Draw(Player player, ContentManager content)
+        public void Draw(Player player, ContentManager content, GameSetting setting)
         {
             numberRenderer = new NumberRenderer(content);
-            arrows = new Arrows(player);
             spriteBatch.Draw(Texture, Position, Color.White);
-            for (var i = 0; i < ListOfNumberPosition().Count; i++)
-            {
-                numberRenderer.DrawNumber(spriteBatch, player.dictionaryOfAllPlants[obstacles[i].Name], Position + ListOfNumberPosition()[i]);
-            }
+            for (var i = 0; i < setting.GetActiveCraft().Count; i++)
+                numberRenderer.DrawNumber(spriteBatch, setting.GetActiveCraft()[i], Position + ListOfNumberPosition()[i]);
+
             for (var i = 0; i < ListOfNewNumberPosition().Count; i++)
-            {
-                numberRenderer.DrawNumber(spriteBatch, player.dictionaryOfAllNewPlants[obstacles[i].Name], Position + ListOfNumberPosition()[i]);
-            }
+                numberRenderer.DrawNumber(spriteBatch, player.dictionaryOfAllNewPlants[obstacles[i].Name], Position + ListOfNewNumberPosition()[i]);
 
         }
     }
