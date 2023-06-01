@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using TrueAlchemicalWalker.Items;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace TrueAlchemicalWalker
 {
@@ -17,6 +18,8 @@ namespace TrueAlchemicalWalker
         public Random random;
         public Background background;
         public Arrows arrows;
+        public bool flag;
+        public MouseState previousMouseState;
         public Vector2 Position { get; set; }
         public List<Vector2> ListOfNumberPosition()
         {
@@ -50,38 +53,58 @@ namespace TrueAlchemicalWalker
             this.obstacles = obstacles;
             this.arrows = arrows;
             random = new Random();
+            flag = true;
+            previousMouseState = new MouseState();
         }
 
-        public void GenerateRandomPosition()
+        public void GenerateRandomPosition(Inventory inventory)
         {
-            int maxX = background.Texture.Width - workbenchTexture.Width;
-            int maxY = background.Texture.Height - workbenchTexture.Height;
-            int x = random.Next(0, maxX + 1);
-            int y = random.Next(0, maxY + 1);
+            var maxX = background.Texture.Width - workbenchTexture.Width;
+            var maxY = background.Texture.Height - workbenchTexture.Height;
+            var x = random.Next(0, maxX + 1);
+            var y = random.Next(0, maxY + 1);
+            while (new Rectangle(x, y, workbenchTexture.Width, workbenchTexture.Height)
+                .Intersects(new Rectangle((int)inventory.Position.X, (int)inventory.Position.X, inventory.Texture.Width, inventory.Texture.Width)))
+            {
+                x = random.Next(0, maxX + 1);
+                y = random.Next(0, maxY + 1);
+            }
             Position = new Vector2(x, y);
         }
         
         public void CraftNewItem (Player player, MouseState mouseState, GameSetting setting, List<Obstacle> obstacles, Arrows arrows)
         {
-            var currentNumber = GetNumberOfItem(mouseState, arrows, player);
-            if (currentNumber != -1)
+            if (previousMouseState != mouseState || flag)
             {
-                if (player.dictionaryOfAllPlants[obstacles[currentNumber].Name] >= setting.GetActiveCraft()[currentNumber]
-                    && player.dictionaryOfAllNewPlants[obstacles[currentNumber].Name] > 0)
+                var currentNumber = GetNumberOfItem(mouseState, arrows, player);
+                if (currentNumber != -1)
                 {
-                    player.dictionaryOfAllPlants[obstacles[currentNumber].Name] -= setting.GetActiveCraft()[currentNumber];
-                    player.dictionaryOfAllNewPlants[obstacles[currentNumber].Name] -= 1;
+                    if (player.dictionaryOfAllPlants[obstacles[currentNumber].Name] >= setting.GetActiveCraft()[currentNumber]
+                        && player.dictionaryOfAllNewPlants[obstacles[currentNumber].Name] > 0)
+                    {
+                        player.dictionaryOfAllPlants[obstacles[currentNumber].Name] -= setting.GetActiveCraft()[currentNumber];
+                        player.dictionaryOfAllNewPlants[obstacles[currentNumber].Name] -= 1;
+                    }
                 }
+                flag = false;
             }
+            previousMouseState = mouseState;
         }
 
         public int GetNumberOfItem(MouseState mouseState, Arrows arrows, Player player)
         {
-            var currentItem = -1;
             for (var i = 0; i < arrows.ListOfArrowsPosition(Position).Count; i++)
                 if (arrows.IsMouseInsideArrow(mouseState, i, player, Position))
-                    return currentItem = i;
-            return currentItem;
+                    return i;
+            return -1;
+        }
+
+        public bool IsAllDone(Player player, List<Obstacle> obstacles)
+        {
+            var result = 0;
+            for (var i = 0; i < obstacles.Count; i++)
+                result += player.dictionaryOfAllNewPlants[obstacles[i].Name];
+            return (result == 0);
         }
 
         public void Draw(Player player, ContentManager content, GameSetting setting)

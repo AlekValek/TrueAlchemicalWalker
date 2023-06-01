@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace TrueAlchemicalWalker.Items
@@ -22,6 +23,13 @@ namespace TrueAlchemicalWalker.Items
             dictionaryOfAllPlants = new Dictionary<string, int>();
             dictionaryOfAllNewPlants = new Dictionary<string, int>();
         }
+        //public void GenerateRandomPositions(GameSetting settings, Background background)
+        //{
+        //    Random random = new Random();
+        //    var x = random.Next(0, background.Texture.Width - Texture.Width);
+        //    var y = random.Next(0, background.Texture.Height - Texture.Height);
+        //    Position = new Vector2(x, y);
+        //}
     }
 }
 

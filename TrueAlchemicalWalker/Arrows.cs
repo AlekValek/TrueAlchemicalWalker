@@ -33,8 +33,3 @@ namespace TrueAlchemicalWalker
         }
     }
 }
-
-                //   Math.Min(player.Position.Y + player.Texture.Height, ListOfArrowsPosition()[numberOfItem].Y + Height)
-                //>= Math.Max(player.Position.Y, ListOfArrowsPosition()[numberOfItem].Y)
-                //&& Math.Min(player.Position.X + player.Texture.Width, ListOfArrowsPosition()[numberOfItem].X + Width)
-                //>= Math.Max(player.Position.X, ListOfArrowsPosition()[numberOfItem].X)

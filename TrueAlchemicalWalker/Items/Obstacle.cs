@@ -22,25 +22,26 @@ namespace TrueAlchemicalWalker.Items
             set { obstacleTexture = value; }
         }
 
-        public void GenerateRandomPositions(GameSetting settings, Background background, Obstacle obstacle)
+        public void GenerateRandomPositions(GameSetting settings, Background background, Obstacle obstacle, NonPlayPlants nonPlayPlants)
         {
             listOfObstaclePositions = new List<Vector2>();
             Random random = new Random();
-            for (int i = 0; i < obstacle.CountOfObstacle; i++)
+            for (var i = 0; i < obstacle.CountOfObstacle; i++)
             {
-                int x = random.Next(0, background.Texture.Width - obstacleTexture.Width);
-                int y = random.Next(0, background.Texture.Height - obstacleTexture.Height);
+                var x = random.Next(0, background.Texture.Width - obstacleTexture.Width);
+                var y = random.Next(0, background.Texture.Height - obstacleTexture.Height);
                 listOfObstaclePositions.Add(new Vector2(x, y));
             }
+            GetNonPlayPlantsPosition(settings, nonPlayPlants);
         }
         public void GetNonPlayPlantsPosition(GameSetting settings, NonPlayPlants nonPlayPlants)
         {
             listOfObstaclePositions = new List<Vector2>();
             Random random = new Random();
-            for (int i = 0; i < settings.countOfObstacle / 2; i++)
+            for (var i = 0; i < settings.countOfObstacle / 2; i++)
             {
-                int x = (int)nonPlayPlants.listOfNonPlayPlantsPositions[random.Next(0, settings.countOfNonPlayPLants)].X;
-                int y = (int)nonPlayPlants.listOfNonPlayPlantsPositions[random.Next(0, settings.countOfNonPlayPLants)].Y;
+                var x = (int)nonPlayPlants.listOfNonPlayPlantsPositions[random.Next(0, settings.countOfNonPlayPLants)].X;
+                var y = (int)nonPlayPlants.listOfNonPlayPlantsPositions[random.Next(0, settings.countOfNonPlayPLants)].Y;
                 listOfObstaclePositions.Add(new Vector2(x, y));
             }
         }

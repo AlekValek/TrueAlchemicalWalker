@@ -40,9 +40,9 @@ namespace TrueAlchemicalWalker
 
             obstacles = new List<Obstacle>
             {
-                new Obstacle("mouses", 10),
-                new Obstacle("moles", 10),
-                new Obstacle("hedgehogs", 10)
+                new Obstacle("mouses", 0),
+                new Obstacle("moles", 0),
+                new Obstacle("hedgehogs", 0)
             };
 
             newObstacles = new List<Obstacle>
@@ -72,11 +72,11 @@ namespace TrueAlchemicalWalker
             setting.LoadContent(setting);
             setting.GetDictionaryPlants(player, obstacles);
             setting.GetDictionaryNewPlants(player, obstacles);
-            for (int i = 0; i < obstacles.Count; i++)
-                obstacles[i].GenerateRandomPositions(setting, background, obstacles[i]);
-            nonPlayPlants.GenerateRandomPositions(setting, background);
             inventory.GenerateRandomPosition();
-            workbench.GenerateRandomPosition();
+            workbench.GenerateRandomPosition(inventory);
+            nonPlayPlants.GenerateRandomPositions(setting, background, workbench, inventory);
+            for (int i = 0; i < obstacles.Count; i++)
+                obstacles[i].GenerateRandomPositions(setting, background, obstacles[i], nonPlayPlants);
         }
 
         protected override void Update(GameTime gameTime)

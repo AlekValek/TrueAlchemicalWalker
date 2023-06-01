@@ -12,9 +12,9 @@ namespace TrueAlchemicalWalker
         private Background background;
         public MultipleItemsController multipleItemsController;
         public NonPlayPlants nonPlayPlants;
-        public Point WindowSize { get; set; } = new Point(900, 972);
+        public Point WindowSize { get; set; } = new Point(1900, 972);
         public int countOfObstacle { get; set; } = 10;
-        public int countOfNonPlayPLants { get; set; } = 20;
+        public int countOfNonPlayPLants { get; set; } = 40;
         public float speed { get; set; } = 5f;
         public int gameDifficulty { get; set; } = 2;
         public int activeCrafting { get; set; } = 0;
@@ -42,13 +42,20 @@ namespace TrueAlchemicalWalker
 
         public void LoadContent(GameSetting gameSettings)
         {
+            //player.GenerateRandomPositions(gameSettings, background);
             player.Position = new Vector2((gameSettings.WindowSize.X - player.Texture.Width) / 2, (gameSettings.WindowSize.Y - player.Texture.Height) / 2);
             background.Position = Vector2.Zero;
+        }
+
+        public void GetCountOfObstacle(List<Obstacle> obstacles)
+        {
+            for (int i = 0; i < obstacles.Count; i++)
+                obstacles[i].CountOfObstacle = GetActiveCraft()[i] * gameDifficulty;
         }
         public void GetDictionaryPlants(Player player, List<Obstacle> obstacles)
         {
             for (int i = 0; i < obstacles.Count; i++)
-                player.dictionaryOfAllPlants.Add(obstacles[i].Name, 20);
+                player.dictionaryOfAllPlants.Add(obstacles[i].Name, 0);
         }
         public void GetDictionaryNewPlants(Player player, List<Obstacle> obstacles)
         {
