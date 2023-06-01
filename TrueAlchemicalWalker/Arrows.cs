@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using TrueAlchemicalWalker.Items;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace TrueAlchemicalWalker
 {
@@ -12,29 +13,28 @@ namespace TrueAlchemicalWalker
     {
         public int Height { get; set; } = 30;
         public int Width { get; set; } = 30;
-        public List<Vector2> ListOfArrowsPosition()
+        public List<Rectangle> ListOfArrowsPosition(Vector2 workbanchPosition)
         {
-            List<Vector2> positions = new()
+            List<Rectangle> positions = new()
             {
-                new Vector2(56, 88),
-                new Vector2(148, 118),
-                new Vector2(242, 88),
+                new Rectangle(new Point(56, 88) + new Point ((int)workbanchPosition.X, (int)workbanchPosition.Y), new Point(30, 30)),
+                new Rectangle (new Point(148, 118) + new Point ((int)workbanchPosition.X, (int)workbanchPosition.Y), new Point(30, 30)),
+                new Rectangle (new Point(242, 88) + new Point ((int)workbanchPosition.X, (int)workbanchPosition.Y), new Point(30, 30)),
             };
             return positions;
         }
         public bool IsMouseInsideArrow(MouseState mouseState, int numberOfItem, Player player, Vector2 workbanchPosition)
         {
-            return
-                          Math.Min(player.Position.Y + player.Texture.Height, ListOfArrowsPosition()[numberOfItem].Y + Height)
-                       >= Math.Max(player.Position.Y, ListOfArrowsPosition()[numberOfItem].Y)
-                       && Math.Min(player.Position.X + player.Texture.Width, ListOfArrowsPosition()[numberOfItem].X + Width)
-                       >= Math.Max(player.Position.X, ListOfArrowsPosition()[numberOfItem].X)
-
-                &&
-                mouseState.Y >= ListOfArrowsPosition()[numberOfItem].Y && mouseState.Y <= ListOfArrowsPosition()[numberOfItem].Y + workbanchPosition.Y + Height
-                && mouseState.X >= ListOfArrowsPosition()[numberOfItem].X && mouseState.X <= ListOfArrowsPosition()[numberOfItem].X + workbanchPosition.X + Width
-               && (mouseState.RightButton == ButtonState.Pressed)
-               ;
+            var flag = ListOfArrowsPosition(workbanchPosition)[numberOfItem].Intersects(new Rectangle((int)player.Position.X, (int)player.Position.Y, (int)player.Position.X, (int)player.Position.Y))
+                    && ListOfArrowsPosition(workbanchPosition)[numberOfItem].Contains(new Point (mouseState.X, mouseState.Y))
+                   && (mouseState.RightButton == ButtonState.Pressed);
+            Debug.WriteLine(flag);
+            return flag;
         }
     }
 }
+
+                //   Math.Min(player.Position.Y + player.Texture.Height, ListOfArrowsPosition()[numberOfItem].Y + Height)
+                //>= Math.Max(player.Position.Y, ListOfArrowsPosition()[numberOfItem].Y)
+                //&& Math.Min(player.Position.X + player.Texture.Width, ListOfArrowsPosition()[numberOfItem].X + Width)
+                //>= Math.Max(player.Position.X, ListOfArrowsPosition()[numberOfItem].X)

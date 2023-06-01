@@ -12,7 +12,7 @@ namespace TrueAlchemicalWalker
         private Background background;
         public MultipleItemsController multipleItemsController;
         public NonPlayPlants nonPlayPlants;
-        public Point WindowSize { get; set; } = new Point(1900, 972);
+        public Point WindowSize { get; set; } = new Point(900, 972);
         public int countOfObstacle { get; set; } = 10;
         public int countOfNonPlayPLants { get; set; } = 20;
         public float speed { get; set; } = 5f;

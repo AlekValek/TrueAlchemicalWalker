@@ -78,7 +78,7 @@ namespace TrueAlchemicalWalker
         public int GetNumberOfItem(MouseState mouseState, Arrows arrows, Player player)
         {
             var currentItem = -1;
-            for (var i = 0; i < arrows.ListOfArrowsPosition().Count; i++)
+            for (var i = 0; i < arrows.ListOfArrowsPosition(Position).Count; i++)
                 if (arrows.IsMouseInsideArrow(mouseState, i, player, Position))
                     return currentItem = i;
             return currentItem;
