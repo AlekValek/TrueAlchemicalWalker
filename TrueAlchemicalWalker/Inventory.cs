@@ -15,7 +15,7 @@ namespace TrueAlchemicalWalker
         public SpriteBatch spriteBatch;
         public NumberRenderer numberRenderer;
         private readonly Random random;
-        private readonly Background background;
+        public Background background;
         public List<Vector2> listOfNumberPosition()
         {
             List<Vector2> positions = new()
