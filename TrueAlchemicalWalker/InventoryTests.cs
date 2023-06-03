@@ -33,9 +33,6 @@ namespace TrueAlchemicalWalker.Tests
             var graphicsDeviceServiceMock = new Mock<IGraphicsDeviceService>();
             graphicsDeviceServiceMock.SetupGet(s => s.GraphicsDevice).Returns(graphicsDeviceMock.Object);
 
-            // Используйте graphicsDeviceServiceMock.Object в вашем коде
-
-
 
             spriteBatch = new SpriteBatch(graphics);
             obstacles = new List<Obstacle>

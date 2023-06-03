@@ -38,7 +38,7 @@ namespace TrueAlchemicalWalker.Items
         {
             listOfObstaclePositions = new List<Vector2>();
             Random random = new Random();
-            for (var i = 0; i < settings.countOfObstacle / 2; i++)
+            for (var i = 0; i < settings.countOfNonPlayPLants / 2; i++)
             {
                 var x = (int)nonPlayPlants.listOfNonPlayPlantsPositions[random.Next(0, settings.countOfNonPlayPLants)].X;
                 var y = (int)nonPlayPlants.listOfNonPlayPlantsPositions[random.Next(0, settings.countOfNonPlayPLants)].Y;

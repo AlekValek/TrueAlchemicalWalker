@@ -38,11 +38,11 @@ namespace TrueAlchemicalWalker
                 if (background.Position.X == 0
                     || (settings.WindowSize.X - background.Position.X < background.Texture.Width && player.Position.X + player.Texture.Width / 2 > settings.WindowSize.X / 2))
                 {
-                    player.Position = new Vector2(player.Position.X - player.Speed, player.Position.Y);
+                    player.Position = new Vector2(player.Position.X - settings.speed, player.Position.Y);
                 }
                 else
                 {
-                    multipleItemsController.ChangeCoord(player.Speed, 0);
+                    multipleItemsController.ChangeCoord(settings.speed, 0);
                 }
             }
             else if (keyboardState.IsKeyDown(Keys.Right) && player.Position.X + player.Texture.Width < settings.WindowSize.X)
@@ -50,11 +50,11 @@ namespace TrueAlchemicalWalker
                 if ((background.Position.X == 0 && player.Position.X + player.Texture.Width / 2 < settings.WindowSize.X / 2)
                     || (settings.WindowSize.X - background.Position.X > background.Texture.Width))
                 {
-                    player.Position = new Vector2(player.Position.X + player.Speed, player.Position.Y);
+                    player.Position = new Vector2(player.Position.X + settings.speed, player.Position.Y);
                 }
                 else
                 {
-                    multipleItemsController.ChangeCoord(-player.Speed, 0);
+                    multipleItemsController.ChangeCoord(-settings.speed, 0);
                 }
             }
 
@@ -63,11 +63,11 @@ namespace TrueAlchemicalWalker
                 if (background.Position.Y == 0
                     || (settings.WindowSize.Y - background.Position.Y < background.Texture.Height && player.Position.Y + player.Texture.Height / 2 > settings.WindowSize.Y / 2))
                 {
-                    player.Position = new Vector2(player.Position.X, player.Position.Y - player.Speed);
+                    player.Position = new Vector2(player.Position.X, player.Position.Y - settings.speed);
                 }
                 else
                 {
-                    multipleItemsController.ChangeCoord(0, player.Speed);
+                    multipleItemsController.ChangeCoord(0, settings.speed);
                 }
             }
             else if (keyboardState.IsKeyDown(Keys.Down) && player.Position.Y + player.Texture.Height < settings.WindowSize.Y)
@@ -75,11 +75,11 @@ namespace TrueAlchemicalWalker
                 if ((background.Position.Y == 0 && player.Position.Y + player.Texture.Height / 2 < settings.WindowSize.Y / 2)
                     || (settings.WindowSize.Y - background.Position.Y > background.Texture.Height))
                 {
-                    player.Position = new Vector2(player.Position.X, player.Position.Y + player.Speed);
+                    player.Position = new Vector2(player.Position.X, player.Position.Y + settings.speed);
                 }
                 else
                 {
-                    multipleItemsController.ChangeCoord(0, -player.Speed);
+                    multipleItemsController.ChangeCoord(0, -settings.speed);
                 }
             }
         }
